@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090914">
+<title>YASER AI VIDEO</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#090914;
+ color:white;
+ font-family:Tahoma,Arial;
+ padding-bottom:90px;
+}
+header{
+ padding:22px 18px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ border-bottom:1px solid #25233a;
+}
+.logo{
+ font-size:21px;
+ font-weight:bold;
+ color:#b58aff;
+}
+.avatar{
+ background:#29203f;
+ padding:11px;
+ border-radius:13px;
+}
+.container{
+ padding:18px;
+ max-width:600px;
+ margin:auto;
+}
+.welcome{
+ font-size:23px;
+ font-weight:bold;
+ margin:20px 0 8px;
+}
+.sub{color:#999;font-size:13px;line-height:2}
+.card{
+ background:linear-gradient(145deg,#19172c,#11111e);
+ border:1px solid #302a49;
+ border-radius:19px;
+ padding:17px;
+ margin-top:19px;
+}
+.card-title{
+ font-size:16px;
+ font-weight:bold;
+ margin-bottom:15px;
+}
+textarea{
+ width:100%;
+ height:125px;
+ background:#0b0b17;
+ color:white;
+ border:1px solid #39334f;
+ border-radius:13px;
+ padding:14px;
+ font-family:Tahoma;
+ font-size:14px;
+ outline:none;
+ resize:vertical;
+}
+textarea:focus{border-color:#a778ff}
+.label{
+ display:block;
+ font-size:13px;
+ color:#c7b5e9;
+ margin:16px 0 9px;
+}
+select{
+ width:100%;
+ padding:14px;
+ border-radius:12px;
+ border:1px solid #39334f;
+ background:#0b0b17;
+ color:white;
+ font-size:14px;
+}
+.generate{
+ width:100%;
+ margin-top:20px;
+ padding:16px;
+ border:0;
+ border-radius:13px;
+ color:white;
+ font-size:16px;
+ font-weight:bold;
+ background:linear-gradient(100deg,#8149ee,#b35cf8);
+}
+.section-title{
+ margin-top:27px;
+ font-size:17px;
+ font-weight:bold;
+}
+.engines{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+ margin-top:14px;
+}
+.engine{
+ background:#171626;
+ border:1px solid #302b45;
+ padding:16px 10px;
+ border-radius:14px;
+ text-align:center;
+ font-size:13px;
+ line-height:2;
+}
+.engine span{font-size:24px}
+.engine small{color:#999}
+.preview{
+ height:175px;
+ background:linear-gradient(145deg,#292044,#10101d);
+ border-radius:15px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ color:#c8a8ff;
+ gap:12px;
+ border:1px solid #38304e;
+}
+.preview .play{font-size:43px}
+.bottom{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:#12111e;
+ border-top:1px solid #302a40;
+ display:flex;
+ justify-content:space-around;
+ padding:14px 5px;
+ z-index:5;
+}
+.bottom div{
+ text-align:center;
+ color:#aaa;
+ font-size:11px;
+ line-height:2;
+}
+.bottom .active{color:#b78aff}
+#message{
+ color:#c6a1ff;
+ font-size:13px;
+ margin-top:12px;
+ line-height:2;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">✦ YASER AI VIDEO</div>
+ <div class="avatar">👤</div>
+</header>
+
+<main class="container">
+
+ <div class="welcome">سلام، خوش آمدی 👋</div>
+ <div class="sub">
+  ایده‌هایت را بنویس؛ هوش مصنوعی آن‌ها را به ویدیو تبدیل می‌کند.
+ </div>
+
+ <div class="card">
+  <div class="card-title">🎬 ساخت ویدیو جدید</div>
+
+  <textarea id="prompt"
+   placeholder="توضیح بده چه ویدیویی می‌خواهی بسازی...&#10;&#10;مثلاً: یک ماشین اسپرت در خیابان‌های توکیو، شب بارانی، نورپردازی سینمایی..."></textarea>
+
+  <label class="label">🤖 موتور هوش مصنوعی</label>
+  <select id="engine">
+   <option value="auto">✨ انتخاب خودکار بهترین موتور</option>
+   <option value="quality">بالاترین کیفیت موجود</option>
+   <option value="fast">سریع‌ترین موتور موجود</option>
+   <option value="fal">WAN 2.7 با fal.ai - پرداختی</option>
+  </select>
+
+  <label class="label">⏱ مدت ویدیو</label>
+  <select id="duration">
+   <option value="5">۵ ثانیه</option>
+   <option value="10">۱۰ ثانیه</option>
+   <option value="15">۱۵ ثانیه</option>
+  </select>
+
+  <label class="label">📱 اندازه ویدیو</label>
+  <select id="ratio">
+   <option value="9:16">عمودی 9:16 - TikTok</option>
+   <option value="16:9">افقی 16:9 - YouTube</option>
+   <option value="1:1">مربعی 1:1</option>
+  </select>
+
+  <button class="generate" onclick="generate()">
+   ✨ ساخت ویدیوی من
+  </button>
+
+  <div id="message"></div>
+ </div>
+
+ <div class="section-title">🚀 امکانات هوش مصنوعی</div>
+
+ <div class="engines">
+  <div class="engine">
+   <span>🎥</span><br>
+   متن به ویدیو<br>
+   <small>Text to Video</small>
+  </div>
+  <div class="engine">
+   <span>🖼️</span><br>
+   عکس به ویدیو<br>
+   <small>Image to Video</small>
+  </div>
+  <div class="engine">
+   <span>🎙️</span><br>
+   تولید صدا<br>
+   <small>AI Voice</small>
+  </div>
+  <div class="engine">
+   <span>✨</span><br>
+   افکت هوشمند<br>
+   <small>AI Effects</small>
+  </div>
+ </div>
+
+ <div class="section-title">🎞 پیش‌نمایش ویدیو</div>
+ <div class="card">
+  <div class="preview">
+   <div class="play">▶</div>
+   <div>ویدیوهای ساخته‌شده شما</div>
+   <small>هنوز ویدیویی تولید نشده است</small>
+  </div>
+ </div>
+
+ <div class="section-title">💎 دنیای خلاقیت</div>
+ <div class="sub">
+  با YASER AI VIDEO ایده‌هایت را به محتوای ویدیویی تبدیل کن.
+ </div>
+
+</main>
+
+<nav class="bottom">
+ <div class="active">🏠<br>خانه</div>
+ <div>🎬<br>ساخت ویدیو</div>
+ <div>🗂️<br>گالری</div>
+ <div>👤<br>حساب من</div>
+</nav>
+
+<script>
+async function generate(){
+ const prompt=document.getElementById("prompt").value.trim();
+ const message=document.getElementById("message");
+ const button=document.querySelector(".generate");
+
+ if(!prompt){
+  message.innerText="⚠️ ابتدا توضیحات ویدیو را بنویس.";
+  return;
+ }
+
+ let result=document.getElementById("video-result");
+
+ if(!result){
+  result=document.createElement("div");
+  result.id="video-result";
+  result.style.marginTop="20px";
+  message.insertAdjacentElement("afterend",result);
+ }
+
+ result.innerHTML="";
+ message.innerText="⏳ در حال ساخت ویدیو با هوش مصنوعی... لطفاً منتظر بمان.";
+
+ if(button) button.disabled=true;
+
+ try{
+  const res=await fetch("/api/generate-real",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+    prompt:prompt,
+    engine:document.getElementById("engine").value,
+    duration:document.getElementById("duration").value,
+    ratio:document.getElementById("ratio").value
+   })
+  });
+
+  const data=await res.json();
+
+  if(!res.ok || !data.success){
+   message.innerText="❌ "+(data.message || "تولید ناموفق بود");
+
+   if(data.details){
+    result.innerText=data.details;
+   }
+
+   return;
+  }
+
+  message.innerText="✅ ویدیو ساخته شد!";
+
+  const video=document.createElement("video");
+  video.controls=true;
+  video.playsInline=true;
+  video.style.width="100%";
+  video.style.maxHeight="450px";
+  video.style.borderRadius="15px";
+  video.style.background="#000";
+
+  const source=document.createElement("source");
+  source.src=data.video_url;
+  source.type="video/mp4";
+  video.appendChild(source);
+
+  const download=document.createElement("a");
+  download.href=data.video_url;
+  download.download=data.filename || "YASER_VIDEO.mp4";
+  download.innerText="⬇️ دانلود ویدیو MP4";
+  download.style.display="block";
+  download.style.textAlign="center";
+  download.style.background="#7c4dff";
+  download.style.color="white";
+  download.style.padding="14px";
+  download.style.marginTop="12px";
+  download.style.borderRadius="12px";
+  download.style.textDecoration="none";
+
+  result.appendChild(video);
+  result.appendChild(download);
+
+ }catch(e){
+  message.innerText="❌ ارتباط با سرور برقرار نشد.";
+  result.innerText=e.message;
+ }finally{
+  if(button) button.disabled=false;
+ }
+}
+
+</script>
+
+</body>
+</html>
