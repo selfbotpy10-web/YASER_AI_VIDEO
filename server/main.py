@@ -3,6 +3,7 @@ from pathlib import Path
 from dotenv import dotenv_values
 import requests
 import time
+import os
 
 app = Flask(__name__)
 
@@ -13,9 +14,9 @@ VIDEO_DIR = BASE / "videos"
 VIDEO_DIR.mkdir(exist_ok=True)
 
 ENV = dotenv_values(BASE / ".env")
-HF_TOKEN = (ENV.get("HF_TOKEN") or "").strip()
-AGNES_API_KEY = (ENV.get("AGNES_API_KEY") or "").strip()
-FAL_KEY = (ENV.get("FAL_KEY") or "").strip()
+HF_TOKEN = (os.environ.get("HF_TOKEN") or ENV.get("HF_TOKEN") or "").strip()
+AGNES_API_KEY = (os.environ.get("AGNES_API_KEY") or ENV.get("AGNES_API_KEY") or "").strip()
+FAL_KEY = (os.environ.get("FAL_KEY") or ENV.get("FAL_KEY") or "").strip()
 
 MODEL = "Wan-AI/Wan2.2-TI2V-5B"
 PROVIDER = "fal-ai"
